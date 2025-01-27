@@ -1,7 +1,7 @@
 ## Försäkringssystem
-Kurs: Systemutvecklingsprojekt, 7.5 hp
-Utvecklingsår: 2024
-Teknikstack: .NET, C#
+**Kurs:** Systemutvecklingsprojekt, 7.5 hp  
+**Utvecklingsår:** 2024  
+**Teknikstack:** .NET, C#  
 
 ## Om projektet
 Det här projektet är ett försäkringssystem utvecklat för en fiktiv kund som en del av kursen Systemutvecklingsprojekt. Systemet hanterar kund- och försäkringsdata och innehåller funktioner för att administrera försäkringar, se statistik och kalkylera provisioner för försäljningsagenter. Utvecklad i .NET C#.
