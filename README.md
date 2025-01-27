@@ -4,7 +4,7 @@ Utvecklingsår: 2024
 Teknikstack: .NET, C#
 
 ## Om projektet
-Det här projektet är ett försäkringssystem utvecklat för en fiktiv kund som en del av kursen Systemutvecklingsprojekt. Systemet hanterar kund- och försäkringsdata och innehåller funktioner för att administrera försäkringar, fakturering och provisioner för försäljningsagenter. Utvecklad i .NET C#.
+Det här projektet är ett försäkringssystem utvecklat för en fiktiv kund som en del av kursen Systemutvecklingsprojekt. Systemet hanterar kund- och försäkringsdata och innehåller funktioner för att administrera försäkringar, se statistik och kalkylera provisioner för försäljningsagenter. Utvecklad i .NET C#.
 ![Inloggningsvy](https://github.com/user-attachments/assets/c2f024ba-0d5a-432b-bbd2-a48cfc84da67)
 ![Försäljningsstatistik](https://github.com/user-attachments/assets/6ee3cf3d-8c86-4678-935c-08c1a9cb82f3)
 ![Kundregister](https://github.com/user-attachments/assets/2523c275-e85d-4939-8996-a6ba5e6fa4c6)
