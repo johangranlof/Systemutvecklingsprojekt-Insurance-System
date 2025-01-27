@@ -1,0 +1,434 @@
+﻿<UserControl
+    x:Class="Presentation.Views.Controls.ViewPrivateInsuranceUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Presentation.Helpers"
+    xmlns:local="clr-namespace:Presentation.Views.Controls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="800"
+    d:DesignWidth="1150"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materialDesign:Snackbar
+            x:Name="SnackbarOne"
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            Panel.ZIndex="100"
+            Background="#EDEDED"
+            Foreground="Black"
+            IsActive="{Binding IsSnackbarActive}"
+            Message="{Binding ValidationError}" />
+        <TextBlock
+            Margin="15,15,0,0">
+            <Hyperlink
+                Command="{Binding BackCommand}"
+                Style="{StaticResource MaterialDesignBody2Hyperlink}">
+                ← Återgå
+            </Hyperlink>
+        </TextBlock>
+        <Grid Grid.Row="1" Margin="30,0,30,30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Margin="10,50,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="70,5,0,10"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Text="{Binding PrivateInsurance.InsuranceType}" />
+
+                    <StackPanel
+                        Margin="20,0,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <Border
+                            Width="Auto"
+                            HorizontalAlignment="Left"
+                            Background="#EEFBF6"
+                            BorderBrush="#C0F8E3"
+                            BorderThickness="2"
+                            CornerRadius="10,10,10,10">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PrivateInsurance.InsuranceStatus.Status}" Value="Aktiv">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <TextBlock
+                                Margin="5,2,5,2"
+                                Foreground="#107A54"
+                                Text="{Binding PrivateInsurance.InsuranceStatus.Status}" />
+                        </Border>
+                        <Border
+                            Width="Auto"
+                            HorizontalAlignment="Left"
+                            Background="#FBF8EE"
+                            BorderBrush="#F8E9C0"
+                            BorderThickness="2"
+                            CornerRadius="10,10,10,10">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PrivateInsurance.InsuranceStatus.Status}" Value="Förfrågan">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5,2,5,2"
+                                    Foreground="#FFBC00"
+                                    Text="{Binding PrivateInsurance.InsuranceStatus.Status}" />
+                                <Menu Margin="0,0,5,0" materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
+                                    <MenuItem
+                                        Padding="0"
+                                        Foreground="#FFBC00"
+                                        Visibility="{Binding IsButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Header="{materialDesign:PackIcon Kind=MenuDown}">
+                                        <MenuItem
+                                            Command="{Binding ActivateInsuranceCommand}"
+                                            Foreground="Black"
+                                            Header="Aktivera">
+                                            <MenuItem.Icon>
+                                                <materialDesign:PackIcon
+                                                    Width="16"
+                                                    Height="16"
+                                                    Kind="Check" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            Command="{Binding RemoveInsuranceCommand}"
+                                            Foreground="Black"
+                                            Header="Ta bort">
+                                            <MenuItem.Icon>
+                                                <materialDesign:PackIcon
+                                                    Width="16"
+                                                    Height="16"
+                                                    Kind="TrashCanOutline" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </MenuItem>
+                                </Menu>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+                <Grid Margin="80,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Försäkringsnummer" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.InsuranceNumber}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Agenturnummer" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.AgentNumber}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Startdatum" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.StartDate, StringFormat='{}{0:yyyy-MM-dd}'}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="3"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Slutdatum" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.EndDate, StringFormat='{}{0:yyyy-MM-dd}'}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="80,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Betalningsperiod" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.PaymentPlan.Type}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Grundbelopp" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.BaseAmount, StringFormat={}{0:N2} kr}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Månadspremie" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.Premium, StringFormat={}{0:N2} kr}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="80,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Grid.Column="0"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Anteckning" />
+                        <TextBlock
+                            Width="900"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.Note, TargetNullValue='-'}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="70,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="Försäkringstagare" />
+                    <TextBlock
+                        Grid.Column="2"
+                        Margin="0,0,0,10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="Försäkrad" />
+                </Grid>
+                <Grid Margin="80,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Namn" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            TextWrapping="Wrap">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="PrivateInsurance.PrivateCustomer.FirstName" />
+                                    <Binding Path="PrivateInsurance.PrivateCustomer.LastName" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Personnummer" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.PrivateCustomer.SSN}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Namn" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            TextWrapping="Wrap">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="PrivateInsurance.Insured.FirstName" />
+                                    <Binding Path="PrivateInsurance.Insured.LastName" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="3"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Personnummer" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.Insured.SSN}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="80,30,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Gatuadress" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.PrivateCustomer.StreetAddress}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Postnummer" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.PrivateCustomer.ZipCode}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Ort" />
+                        <TextBlock
+                            Width="auto"
+                            VerticalAlignment="Top"
+                            Text="{Binding PrivateInsurance.PrivateCustomer.City}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </Grid>
+                <StackPanel Margin="0,10,0,0">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PrivateInsurance.PrivateInsuranceOptionalExtras.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock
+                        Margin="70,30,0,10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="Tillval" />
+                    <ItemsControl ItemsSource="{Binding PrivateInsurance.PrivateInsuranceOptionalExtras}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <UniformGrid
+                                    Margin="80,0,0,30"
+                                    Columns="4"
+                                    Rows="1">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,3"
+                                            FontSize="13"
+                                            FontWeight="Bold"
+                                            Text="Typ:" />
+                                        <TextBlock FontSize="13" Text="{Binding Type}" />
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,3"
+                                            FontSize="13"
+                                            FontWeight="Bold"
+                                            Text="Premietillägg:" />
+                                        <TextBlock FontSize="13" Text="{Binding PremiumSupplement, StringFormat={}{0:N2} kr}" />
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,3"
+                                            FontSize="13"
+                                            FontWeight="Bold"
+                                            Text="Grundbelopp:" />
+                                        <TextBlock FontSize="13" Text="{Binding BaseAmount, StringFormat={}{0:N2} kr}" />
+                                    </StackPanel>
+                                </UniformGrid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
+

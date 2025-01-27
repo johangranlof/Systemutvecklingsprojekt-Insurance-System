@@ -1,0 +1,67 @@
+﻿<Window
+    x:Class="Presentation.Views.RemoveEmployeePopUp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:vm="clr-namespace:Presentation.ViewModels"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="Verdana"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <Border
+        Background="white"
+        BorderThickness="0"
+        CornerRadius="20,20,20,20">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <materialDesign:PackIcon
+                Width="30"
+                Height="30"
+                Margin="0,30,0,0"
+                HorizontalAlignment="Center"
+                Kind="AlertCircleOutline" />
+            <TextBlock
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Ta bort anställd" />
+            <TextBlock
+                Width="300"
+                Margin="10,10,10,0"
+                FontSize="12"
+                Text="{Binding Employee.FullName, StringFormat='Är du säker du vill ta bort {0}?'}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Width="300"
+                Margin="10,0,10,0"
+                FontSize="12"
+                Text="{Binding Employee.FullName, StringFormat='Genom att ta bort försvinner {0} permanent'}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+            <StackPanel
+                Margin="0,20,0,30"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Width="auto"
+                    Command="{Binding CancelCommand}"
+                    Content="Avbryt"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}" />
+                <Button
+                    Width="auto"
+                    Margin="90,0,0,0"
+                    Command="{Binding ConfirmCommand}"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon VerticalAlignment="Center" Kind="TrashCanOutline" />
+                        <TextBlock Margin="10,0,0,0" Text="Ta bort" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,235 @@
+﻿<UserControl
+    x:Class="Presentation.Views.Controls.AddEmployeeUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Presentation.Helpers"
+    xmlns:local="clr-namespace:Presentation.Views.Controls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Presentation.ViewModels"
+    d:DesignHeight="800"
+    d:DesignWidth="1150"
+    Foreground="Black"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <helpers:PercentageConverter x:Key="PercentageConverter" />
+        <helpers:IntToCurrencyStringConverter x:Key="IntToCurrencyStringConverter" />
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Margin="15,15,0,0">
+            <Hyperlink Command="{Binding BackCommand}" Style="{StaticResource MaterialDesignBody2Hyperlink}">
+                ← Återgå
+            </Hyperlink>
+        </TextBlock>
+        <materialDesign:Snackbar
+            x:Name="SnackbarOne"
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            Panel.ZIndex="100"
+            Background="#EDEDED"
+            Foreground="Black"
+            IsActive="{Binding IsSnackbarActive}"
+            Message="{Binding ValidationError}" />
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top">
+            <TextBlock
+                Margin="0,0,0,15"
+                Panel.ZIndex="1"
+                FontSize="20"
+                FontWeight="Bold"
+                Text="Lägg till anställd"
+                TextAlignment="Center" />
+            <StackPanel
+                Margin="15,20,5,25"
+                VerticalAlignment="Stretch"
+                Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Förnamn" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Efternamn" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Personnummer" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        materialDesign:HintAssist.Hint="ååmmddxxxx"
+                        materialDesign:TransitionAssist.DisableTransitions="True"
+                        AcceptsReturn="True"
+                        MaxLength="10"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding SSN, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock
+                Margin="0,20,0,15"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Kontaktuppgifter" />
+            <StackPanel Margin="15,0,5,25" Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Mejl" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        materialDesign:TextFieldAssist.HasLeadingIcon="True"
+                        materialDesign:TextFieldAssist.LeadingIcon="Email"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Telefonnummer" />
+
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        materialDesign:TextFieldAssist.HasLeadingIcon="True"
+                        materialDesign:TextFieldAssist.LeadingIcon="Phone"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding PhoneNumber, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock
+                Margin="0,20,0,15"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Adress" />
+            <StackPanel Margin="15,0,5,25" Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Gatuadress" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding StreetAddress, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Postnummer" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding ZipCode, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Ort" />
+
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding City, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <TextBlock
+                Margin="0,20,0,15"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Jobbtitel" />
+            <StackPanel Margin="15,0,5,25" Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Roll" />
+
+                    <ComboBox
+                        Width="250"
+                        DisplayMemberPath="Name"
+                        ItemsSource="{Binding Roles}"
+                        SelectedValue="{Binding SelectedRoleId, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValuePath="Id"
+                        Style="{StaticResource MaterialDesignFilledComboBox}" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Sysselsättningsgrad" />
+                    <ComboBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        ItemsSource="{Binding EmploymentPercentages}"
+                        SelectedItem="{Binding EmploymentPercentage, ValidatesOnDataErrors=True, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource MaterialDesignFilledComboBox}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource PercentageConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel
+                Margin="0,10,0,0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Width="Auto"
+                    Command="{Binding AddEmployeeCommand}"
+                    Content="Spara"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

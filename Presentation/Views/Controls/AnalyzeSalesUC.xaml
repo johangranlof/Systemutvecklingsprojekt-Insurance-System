@@ -1,0 +1,304 @@
+﻿<UserControl
+    x:Class="Presentation.Views.Controls.AnalyzeSalesUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Presentation.Helpers"
+    xmlns:local="clr-namespace:Presentation.Views.Controls"
+    xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+    xmlns:lvc1="clr-namespace:PdfSharp.Charting;assembly=PdfSharp.Charting"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="1440"
+    d:DesignWidth="2560"
+    Background="White"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <helpers:BoolToStringConverter x:Key="BoolToStringConverter" />
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="5,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                FontSize="24"
+                FontWeight="Bold"
+                Text="Försäljningsstatistik" />
+            <Grid
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="0,0,20,0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <RadioButton
+                        Content="Alla"
+                        Cursor="Hand"
+                        GroupName="Group1"
+                        IsChecked="{Binding SelectedFilter, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Alla'}"
+                        Style="{StaticResource MaterialDesignTabRadioButton}" />
+                    <RadioButton
+                        Margin="20,0,0,0"
+                        Content="Företag"
+                        Cursor="Hand"
+                        GroupName="Group1"
+                        IsChecked="{Binding SelectedFilter, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Företag'}"
+                        Style="{StaticResource MaterialDesignTabRadioButton}" />
+                    <RadioButton
+                        Margin="20,0,0,0"
+                        Content="Privat"
+                        Cursor="Hand"
+                        GroupName="Group1"
+                        IsChecked="{Binding SelectedFilter, Converter={StaticResource BoolToStringConverter}, ConverterParameter='Privat'}"
+                        Style="{StaticResource MaterialDesignTabRadioButton}" />
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="15,0,5,0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="Säljare" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Width="250"
+                            DisplayMemberPath="FullName"
+                            ItemsSource="{Binding Sellers}"
+                            SelectedItem="{Binding SelectedSeller}"
+                            Style="{StaticResource MaterialDesignFilledComboBox}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,5,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Vertical">
+                        <TextBlock FontWeight="Bold" Text="År" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Width="250"
+                            ItemsSource="{Binding AvailableYears}"
+                            SelectedItem="{Binding SelectedYear}"
+                            Style="{StaticResource MaterialDesignFilledComboBox}" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="0,0,10,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="15,0,0,10"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Text="{Binding SelectedSeller.FullName, StringFormat='Antal sålda försäkringar för: {0}'}" />
+                <Border
+                    Margin="15,25,15,15"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    CornerRadius="10,10,10,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <lvc:CartesianChart
+                            Grid.Row="1"
+                            Height="300"
+                            Margin="15"
+                            Series="{Binding MonthlyTrendSeries}"
+                            XAxes="{Binding XAxis}"
+                            YAxes="{Binding YAxis}" />
+                    </Grid>
+                </Border>
+                <Grid Grid.Column="1" Margin="10,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="0,30,0,0"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+
+                        <materialDesign:Card
+                            Width="200"
+                            Height="75"
+                            Margin="0,0,0,0"
+                            Padding="8"
+                            Background="#FF283593"
+                            Foreground="White"
+                            UniformCornerRadius="6">
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Text="{Binding TotalSold}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    FontSize="10"
+                                    Text="Sålda försäkringar" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card
+                            Width="200"
+                            Height="75"
+                            Margin="155,0,0,0"
+                            Padding="8"
+                            Background="#FF283593"
+                            Foreground="White"
+                            UniformCornerRadius="6">
+                            <StackPanel
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Text="{Binding AveragePerMonth}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    FontSize="10"
+                                    Text="Medel/Mån" />
+                            </StackPanel>
+                        </materialDesign:Card>
+                    </StackPanel>
+                    <Border
+                        Grid.Row="1"
+                        Margin="15"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        CornerRadius="10,10,10,10">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <lvc:CartesianChart
+                                Grid.Row="1"
+                                Height="250"
+                                Margin="15"
+                                Series="{Binding SalesSeries}"
+                                XAxes="{Binding XAxis}"
+                                YAxes="{Binding YAxis}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="4" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="605" />
+                    <ColumnDefinition Width="605" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="15">
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="Privatförsäkringar" />
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        Background="White"
+                        BorderThickness="1"
+                        HeadersVisibility="Column"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding PrivateSales}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Seller}"
+                                Header="Säljare/Försäkring" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Children}"
+                                Header="Barn" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Adults}"
+                                Header="Vuxen" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Life}"
+                                Header="Liv" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Total}"
+                                Header="Total" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="15">
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Text="Företagsförsäkringar" />
+                    <DataGrid
+                        AutoGenerateColumns="False"
+                        Background="White"
+                        BorderThickness="1"
+                        HeadersVisibility="Column"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding BusinessSales}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Seller}"
+                                Header="Säljare/Försäkring" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Vehicles}"
+                                Header="Fordon" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding RealEstate}"
+                                Header="Fastighet" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Liability}"
+                                Header="Ansvar" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Total}"
+                                Header="Total" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

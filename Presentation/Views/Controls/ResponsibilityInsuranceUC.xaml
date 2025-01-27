@@ -1,0 +1,186 @@
+﻿<UserControl
+    x:Class="Presentation.Views.Controls.ResponsibilityInsuranceUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Presentation.Helpers"
+    xmlns:local="clr-namespace:Presentation.Views.Controls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="800"
+    d:DesignWidth="1150"
+    mc:Ignorable="d">
+
+
+    <UserControl.Resources>
+        <helpers:IntToCurrencyStringConverter x:Key="IntToCurrencyStringConverter" />
+    </UserControl.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Margin="15,15,0,0">
+            <Hyperlink Command="{Binding BackCommand}" Style="{StaticResource MaterialDesignBody2Hyperlink}">
+                ← Återgå
+            </Hyperlink>
+        </TextBlock>
+        <materialDesign:Snackbar
+            x:Name="SnackbarOne"
+            Grid.Row="1"
+            VerticalAlignment="Top"
+            Panel.ZIndex="100"
+            Background="#EDEDED"
+            Foreground="Black"
+            IsActive="{Binding IsSnackbarActive}"
+            Message="{Binding SnackbarMessage}" />
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <StackPanel Margin="0,0,0,40">
+                <TextBlock
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Text="Fyll i Försäkringsuppgifter" />
+                <TextBlock
+                    FontSize="16"
+                    FontStyle="Italic"
+                    Text="för ansvarsförsäkring" />
+            </StackPanel>
+            <StackPanel
+                Margin="15,0,5,25"
+                VerticalAlignment="Stretch"
+                Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Försäkringstagare" />
+                    <ComboBox
+                        Width="250"
+                        Margin="0,0,0,15"
+                        ItemsSource="{Binding BusinessCustomerName}"
+                        SelectedItem="{Binding SelectedBusinessCustomerName, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        Style="{StaticResource MaterialDesignFilledComboBox}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="15,0,5,25" Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Betalningsperiod" />
+
+                    <ComboBox
+                        Width="250"
+                        Margin="0,0,0,15"
+                        DisplayMemberPath="Type"
+                        ItemsSource="{Binding PaymentPlans}"
+                        SelectedItem="{Binding SelectedPaymentPlan, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        Style="{StaticResource MaterialDesignFilledComboBox}" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Grundbelopp" />
+                    <ComboBox
+                        Width="250"
+                        Margin="0,0,0,15"
+                        ItemsSource="{Binding ExtentOptions}"
+                        SelectedItem="{Binding SelectedExtent, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        Style="{StaticResource MaterialDesignFilledComboBox}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource IntToCurrencyStringConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Självrisk" />
+                    <ComboBox
+                        Width="250"
+                        Margin="0,0,0,15"
+                        ItemsSource="{Binding LiabilityAmounts}"
+                        SelectedItem="{Binding SelectedLiabilityAmount, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        Style="{StaticResource MaterialDesignFilledComboBox}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="15,0,5,25" Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Förnamn kontaktperson" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding ContactFirstName, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Efternamn kontaktperson" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding ContactLastName, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Telefonnummer kontaktperson" />
+                    <TextBox
+                        Width="250"
+                        VerticalAlignment="Top"
+                        materialDesign:TextFieldAssist.HasLeadingIcon="True"
+                        materialDesign:TextFieldAssist.LeadingIcon="Phone"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding ContactPhoneNumber, Mode=TwoWay, ValidatesOnDataErrors=True}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Margin="15,0,5,25" Orientation="Horizontal">
+                <StackPanel
+                    Margin="0,0,5,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Vertical">
+                    <TextBlock FontWeight="Bold" Text="Eventuell anteckning" />
+                    <TextBox
+                        Width="505"
+                        Height="70"
+                        VerticalAlignment="Top"
+                        AcceptsReturn="True"
+                        Style="{StaticResource MaterialDesignFilledTextBox}"
+                        Text="{Binding Note, Mode=TwoWay}"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button
+                    Width="auto"
+                    Command="{Binding SaveCommand}"
+                    Content="Spara"
+                    Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,204 @@
+﻿<Window
+    x:Class="Presentation.Views.ChooseInsuranceTypeWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Presentation.Helpers"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="700"
+    Height="450"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="Verdana"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+
+    <Window.Resources>
+        <helpers:BoolToStringConverter x:Key="BoolToStringConverter" />
+    </Window.Resources>
+    <Border
+        Background="white"
+        BorderThickness="0"
+        CornerRadius="20,20,20,20">
+        <Grid Margin="5,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button
+                Grid.Row="0"
+                Width="20"
+                Height="20"
+                Margin="0,5,5,0"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                BorderBrush="Black"
+                Command="{Binding BackCommand}"
+                Foreground="Black"
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                ToolTip="MaterialDesignFloatingActionMiniDarkButton">
+                <materialDesign:PackIcon Kind="Close" />
+            </Button>
+            <StackPanel
+                Grid.Row="1"
+                Margin="0,20,0,20"
+                HorizontalAlignment="Center">
+                <TextBlock
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Text="Erbjud försäkring"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Margin="0,10,0,0"
+                    FontSize="12"
+                    Text="Försäkringstyp"
+                    TextAlignment="Center" />
+            </StackPanel>
+            <UniformGrid
+                Grid.Row="2"
+                Margin="0,0,0,30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Columns="3">
+
+                <Button
+                    Width="200"
+                    Height="120"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    Background="White"
+                    BorderThickness="0"
+                    Command="{Binding Offersicknness_accidentCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="Black"
+                                Text="Sjuk- och olycksfallsförsäkring barn(upp till 17 år)"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Image Width="50" Source="pack://application:,,,/Images/ChildInsurance.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Width="200"
+                    Height="120"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    Background="White"
+                    BorderThickness="0"
+                    Command="{Binding Offersicknness_accident_Adult_Command}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="Black"
+                                Text="Sjuk- och olycksfallsförsäkring vuxen"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Image Width="50" Source="pack://application:,,,/Images/SickAdultInsurance.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Width="200"
+                    Height="120"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    Background="White"
+                    BorderThickness="0"
+                    Command="{Binding LifeInsuranceOfferCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="Black"
+                                Text="Livförsäkring vuxen"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Image Width="50" Source="pack://application:,,,/Images/LifeInsurance.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Width="200"
+                    Height="120"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    Background="White"
+                    BorderThickness="0"
+                    Command="{Binding OfferResponsibilityInsuranceCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="Black"
+                                Text="Ansvarsförsäkring"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Image Width="50" Source="pack://application:,,,/Images/ResponsibilityInsurance.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Width="200"
+                    Height="120"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    Background="White"
+                    BorderThickness="0"
+                    Command="{Binding OfferCarInsuranceCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="Black"
+                                Text="Fordonsförsäkring personbil"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Image Width="50" Source="pack://application:,,,/Images/CarInsurance.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button
+                    Width="200"
+                    Height="120"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    materialDesign:ElevationAssist.Elevation="Dp4"
+                    Background="White"
+                    BorderThickness="0"
+                    Command="{Binding OfferRealEstateInsuranceCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}">
+                    <Button.Content>
+                        <StackPanel>
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="Black"
+                                Text="Fastighet och inventarieförsäkring"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                            <Image Width="50" Source="pack://application:,,,/Images/EstateInsurance.png" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </UniformGrid>
+        </Grid>
+    </Border>
+</Window>

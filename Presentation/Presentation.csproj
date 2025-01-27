@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\CarInsurance.png" />
+    <None Remove="Images\ChildInsurance.png" />
+    <None Remove="Images\EstateInsurance.png" />
+    <None Remove="Images\ISS.png" />
+    <None Remove="Images\ISSLogga.png" />
+    <None Remove="Images\LifeInsurance.png" />
+    <None Remove="Images\LoginBild1.png" />
+    <None Remove="Images\AddPerson.png" />
+    <None Remove="Images\Edit.png" />
+    <None Remove="Images\ResponsibilityInsurance.png" />
+    <None Remove="Images\SickAdultInsurance.png" />
+    <None Remove="Images\Trashcan.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\ISS.png" />
+    <Resource Include="Images\SickAdultInsurance.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc4.5" />
+    <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
+    <PackageReference Include="MaterialDesignInXamlToolkitAddOns" Version="0.0.6" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.20" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="PDFsharp" Version="6.1.1" />
+    <PackageReference Include="Syncfusion.UI.WPF.NET" Version="27.1.53" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj" />
+    <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\CarInsurance.png" />
+    <Resource Include="Images\ChildInsurance.png" />
+    <Resource Include="Images\EstateInsurance.png" />
+    <Resource Include="Images\LifeInsurance.png" />
+    <Resource Include="Images\LoginBild1.png" />
+    <Resource Include="Images\AddPerson.png" />
+    <Resource Include="Images\Edit.png" />
+    <Resource Include="Images\ResponsibilityInsurance.png" />
+    <Resource Include="Images\Trashcan.png" />
+  </ItemGroup>
+
+</Project>

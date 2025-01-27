@@ -1,0 +1,67 @@
+﻿<Window
+    x:Class="Presentation.Views.AddEmployeeRolePopup"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Presentation.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Presentation.ViewModels"
+    Title="Skapa Jobbtitel"
+    Width="375"
+    Height="275"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="Verdana"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None">
+    <Border
+        Background="white"
+        BorderBrush="Indigo"
+        BorderThickness="2"
+        CornerRadius="20,20,20,20">
+        <StackPanel>
+            <TextBlock
+                Margin="0,40,0,0"
+                HorizontalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="Skapa jobbtitel" />
+
+            <TextBlock
+                Width="300"
+                Margin="10,10,10,40"
+                FontSize="12"
+                Text="Agentnummer skapas automatiskt för en säljare."
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ComboBox
+                    DisplayMemberPath="Name"
+                    ItemsSource="{Binding FilteredRoles}"
+                    SelectedItem="{Binding SelectedRole}" />
+                <ComboBox
+                    Margin="0,10"
+                    ItemsSource="{Binding EmploymentPercentages}"
+                    SelectedItem="{Binding SelectedPercentage}" />
+                <StackPanel
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="100"
+                        Command="{Binding CancelCommand}"
+                        Content="Avbryt"
+                        Style="{StaticResource MaterialDesignPaperDarkButton}" />
+                    <Button
+                        Width="100"
+                        Margin="20,0,0,0"
+                        Command="{Binding ConfirmCommand}"
+                        Content="Spara"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

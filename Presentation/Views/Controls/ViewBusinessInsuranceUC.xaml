@@ -1,0 +1,623 @@
+﻿<UserControl
+    x:Class="Presentation.Views.Controls.ViewBusinessInsuranceUC"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:Presentation.Helpers"
+    xmlns:local="clr-namespace:Presentation.Views.Controls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="800"
+    d:DesignWidth="1150"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <helpers:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
+        <helpers:InsuranceTypeAndCountToVisibilityConverter x:Key="InsuranceTypeAndCountToVisibilityConverter" />
+
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materialDesign:Snackbar
+            x:Name="SnackbarOne"
+            VerticalAlignment="Top"
+            Panel.ZIndex="100"
+            Background="#EDEDED"
+            Foreground="Black"
+            IsActive="{Binding IsSnackbarActive}"
+            Message="{Binding ValidationError}" />
+        <TextBlock Margin="15,15,0,0">
+            <Hyperlink Command="{Binding BackCommand}" Style="{StaticResource MaterialDesignBody2Hyperlink}">
+                ← Återgå
+            </Hyperlink>
+        </TextBlock>
+        <ScrollViewer
+            Grid.Row="2"
+            Margin="30,0,30,30"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <StackPanel Margin="10,50,0,0">
+                    <StackPanel Orientation="Horizontal">
+
+                        <Grid Grid.Row="1" Margin="30,0,30,30">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Margin="10,50,0,0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="70,5,0,10"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Text="{Binding InsuranceType}" />
+                                    <StackPanel
+                                        Margin="20,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center">
+                                        <Border
+                                            Width="Auto"
+                                            HorizontalAlignment="Left"
+                                            Background="#EEFBF6"
+                                            BorderBrush="#C0F8E3"
+                                            BorderThickness="2"
+                                            CornerRadius="10,10,10,10">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding BusinessInsurance.InsuranceStatus.Status}" Value="Aktiv">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock
+                                                Margin="5,2,5,2"
+                                                Foreground="#107A54"
+                                                Text="{Binding BusinessInsurance.InsuranceStatus.Status}" />
+                                        </Border>
+                                        <Border
+                                            Width="Auto"
+                                            HorizontalAlignment="Left"
+                                            Background="#FBF8EE"
+                                            BorderBrush="#F8E9C0"
+                                            BorderThickness="2"
+                                            CornerRadius="10,10,10,10">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding BusinessInsurance.InsuranceStatus.Status}" Value="Förfrågan">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,2,5,2"
+                                                    Foreground="#FFBC00"
+                                                    Text="{Binding BusinessInsurance.InsuranceStatus.Status}" />
+                                                <Menu Margin="0,0,5,0" materialDesign:MenuAssist.TopLevelMenuItemHeight="20">
+                                                    <MenuItem
+                                                        Padding="0"
+                                                        Foreground="#FFBC00"
+                                                        Header="{materialDesign:PackIcon Kind=MenuDown}"
+                                                        Visibility="{Binding IsButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                                        <MenuItem
+                                                            Command="{Binding ActivateInsuranceCommand}"
+                                                            Foreground="Black"
+                                                            Header="Aktivera">
+                                                            <MenuItem.Icon>
+                                                                <materialDesign:PackIcon
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    Kind="Check" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem
+                                                            Command="{Binding RemoveInsuranceCommand}"
+                                                            Foreground="Black"
+                                                            Header="Ta bort">
+                                                            <MenuItem.Icon>
+                                                                <materialDesign:PackIcon
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    Kind="TrashCanOutline" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </MenuItem>
+                                                </Menu>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Grid Margin="80,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Försäkringsnummer" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.InsuranceNumber}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Agenturnummer" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.AgentNumber}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Startdatum" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.StartDate, StringFormat='{}{0:yyyy-MM-dd}'}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="3"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Slutdatum" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.EndDate, StringFormat='{}{0:yyyy-MM-dd}'}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="80,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Betalningsperiod" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.PaymentPlan.Type}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical" />
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Månadspremie" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.Premium, StringFormat={}{0:N2} kr}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="80,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Grid.Column="0"
+                                        Margin="0,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Anteckning" />
+                                        <TextBlock
+                                            Width="900"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.Note, TargetNullValue='-'}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="70,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Margin="0,0,0,10"
+                                        FontSize="14"
+                                        FontWeight="Bold"
+                                        Text="Försäkringstagare" />
+                                </Grid>
+                                <Grid Margin="80,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Namn" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.BusinessCustomer.CompanyName}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Organisatonsnummer" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.BusinessCustomer.OrganisationNumber}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Riktnummer" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.BusinessCustomer.AreaCode}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="80,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Gatuadress" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.BusinessCustomer.StreetAddress}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Postnummer" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.BusinessCustomer.ZipCode}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Ort" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.BusinessCustomer.City}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Margin="70,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Margin="0,0,0,10"
+                                        FontSize="14"
+                                        FontWeight="Bold"
+                                        Text="Kontaktperson" />
+                                </Grid>
+                                <Grid Margin="80,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Förnamn" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.ContactFirstName}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Efternamn" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.ContactLastName}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Vertical">
+                                        <TextBlock FontWeight="Bold" Text="Telefonnummer" />
+                                        <TextBlock
+                                            Width="auto"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding BusinessInsurance.ContactPhoneNumber}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <StackPanel>
+                                    <StackPanel Margin="0,20,10,10" Orientation="Vertical">
+                                        <StackPanel.Visibility>
+                                            <MultiBinding Converter="{StaticResource InsuranceTypeAndCountToVisibilityConverter}" ConverterParameter="Fastighet och inventarieförsäkring">
+                                                <Binding Path="InsuranceType" />
+                                                <Binding Path="RealEstateInsuranceList.Count" />
+                                            </MultiBinding>
+                                        </StackPanel.Visibility>
+                                        <TextBlock
+                                            Margin="70,30,0,10"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Text="Detaljer för fastighetsförsäkring" />
+                                        <ItemsControl ItemsSource="{Binding RealEstateInsuranceCollectionView}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <UniformGrid
+                                                        Margin="80,0,0,30"
+                                                        Columns="4"
+                                                        Rows="2">
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Värde fastighet (SEK)" />
+                                                            <TextBlock
+                                                                Margin="0,0,0,30"
+                                                                FontSize="13"
+                                                                Text="{Binding PropertyValue, StringFormat={}{0:N2} kr}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Tilläggspremie för fastighet" />
+                                                            <TextBlock FontSize="13" Text="{Binding RealEstatePremium, StringFormat={}{0:N2} kr}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Värde inventarier (SEK)" />
+                                                            <TextBlock FontSize="13" Text="{Binding InventoryValue, StringFormat={}{0:N2} kr}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Tilläggspremie för inventarie" />
+                                                            <TextBlock FontSize="13" Text="{Binding InventoryPrice, StringFormat={}{0:N2} kr}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Fastighetens gatuadress" />
+                                                            <TextBlock FontSize="13" Text="{Binding StreetAddress}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Fastighetens postnummer" />
+                                                            <TextBlock FontSize="13" Text="{Binding ZipCode}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Fastighetens ort" />
+                                                            <TextBlock FontSize="13" Text="{Binding City}" />
+                                                        </StackPanel>
+                                                    </UniformGrid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                    <StackPanel Margin="0,20,10,10" Orientation="Vertical">
+                                        <StackPanel.Visibility>
+                                            <MultiBinding Converter="{StaticResource InsuranceTypeAndCountToVisibilityConverter}" ConverterParameter="Ansvarsförsäkring">
+                                                <Binding Path="InsuranceType" />
+                                                <Binding Path="LiabilityInsuranceList.Count" />
+                                            </MultiBinding>
+                                        </StackPanel.Visibility>
+                                        <TextBlock
+                                            Margin="70,30,0,10"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Text="Detaljer för ansvarsförsäkring" />
+                                        <ItemsControl ItemsSource="{Binding LiabilityInsuranceCollectionView}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <UniformGrid
+                                                        Margin="80,0,0,30"
+                                                        Columns="4"
+                                                        Rows="1">
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Belopp" />
+                                                            <TextBlock FontSize="13" Text="{Binding Extent, StringFormat={}{0:N0} kr}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Självrisk" />
+                                                            <TextBlock FontSize="13" Text="{Binding Deductible, StringFormat={}{0:N2} kr}" />
+                                                        </StackPanel>
+                                                    </UniformGrid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                    <StackPanel Margin="0,20,10,10" Orientation="Vertical">
+                                        <StackPanel.Visibility>
+                                            <MultiBinding Converter="{StaticResource InsuranceTypeAndCountToVisibilityConverter}" ConverterParameter="Fordonsförsäkring personbil">
+                                                <Binding Path="InsuranceType" />
+                                                <Binding Converter="{StaticResource GreaterThanZeroConverter}" Path="VehicleInsuranceList.Count" />
+                                            </MultiBinding>
+                                        </StackPanel.Visibility>
+                                        <TextBlock
+                                            Margin="70,30,0,10"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Text="Detaljer för fordonsförsäkring" />
+                                        <ItemsControl ItemsSource="{Binding VehicleInsuranceCollectionView}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <UniformGrid
+                                                        Margin="80,0,0,30"
+                                                        Columns="4"
+                                                        Rows="2">
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Omfattning" />
+                                                            <TextBlock
+                                                                Margin="0,0,0,30"
+                                                                FontSize="13"
+                                                                Text="{Binding DataContext.CoverageTypeList[0], RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Zon" />
+                                                            <TextBlock FontSize="13" Text="{Binding DataContext.ZoneList[0], RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Självrisk" />
+                                                            <TextBlock FontSize="13" Text="{Binding Debuctible, StringFormat={}{0:N2} kr}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Registreringsnummer" />
+                                                            <TextBlock FontSize="13" Text="{Binding RegNumber}" />
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Förare" />
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock FontSize="13">
+                                                                    <TextBlock.Text>
+                                                                        <MultiBinding StringFormat="{}{0} {1}">
+                                                                            <Binding Path="DriverFirstName" />
+                                                                            <Binding Path="DriverLastName" />
+                                                                        </MultiBinding>
+                                                                    </TextBlock.Text>
+                                                                </TextBlock>
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock
+                                                                Margin="0,0,0,3"
+                                                                FontSize="13"
+                                                                FontWeight="Bold"
+                                                                Text="Förarens personnummer" />
+                                                            <TextBlock FontSize="13" Text="{Binding DriverSSN}" />
+                                                        </StackPanel>
+                                                    </UniformGrid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
+
+
